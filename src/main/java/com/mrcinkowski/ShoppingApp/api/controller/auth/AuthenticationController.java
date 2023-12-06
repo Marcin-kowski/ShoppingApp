@@ -4,10 +4,12 @@ import com.mrcinkowski.ShoppingApp.api.model.LoginBody;
 import com.mrcinkowski.ShoppingApp.api.model.LoginResponse;
 import com.mrcinkowski.ShoppingApp.api.model.RegistrationBody;
 import com.mrcinkowski.ShoppingApp.exception.UserAlreadyExistsException;
+import com.mrcinkowski.ShoppingApp.model.LocalUser;
 import com.mrcinkowski.ShoppingApp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,6 +40,11 @@ public class AuthenticationController {
             LoginResponse loginResponse = new LoginResponse();
             loginResponse.setJwt(jwt);
             return ResponseEntity.ok(loginResponse);
+            }
         }
+
+    @GetMapping("/me")
+    public LocalUser getLoggedInUserProfile(@AuthenticationPrincipal LocalUser user) {
+        return user;
     }
 }
