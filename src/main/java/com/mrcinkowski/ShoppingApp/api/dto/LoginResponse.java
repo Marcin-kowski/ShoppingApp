@@ -1,10 +1,10 @@
-package com.mrcinkowski.ShoppingApp.api.model;
+package com.mrcinkowski.ShoppingApp.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class LoginResponse {
-    @Getter
-    @Setter
     private String jwt;
 }

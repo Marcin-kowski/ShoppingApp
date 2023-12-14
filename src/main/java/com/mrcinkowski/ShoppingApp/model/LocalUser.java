@@ -38,4 +38,10 @@ public class LocalUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "local_user_roles",
+            joinColumns = @JoinColumn(name = "local_user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
+
 }

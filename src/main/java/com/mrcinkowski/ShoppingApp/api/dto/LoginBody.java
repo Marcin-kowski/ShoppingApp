@@ -1,4 +1,4 @@
-package com.mrcinkowski.ShoppingApp.api.model;
+package com.mrcinkowski.ShoppingApp.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

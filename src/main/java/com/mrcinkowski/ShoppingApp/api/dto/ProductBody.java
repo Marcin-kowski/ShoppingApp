@@ -1,6 +1,5 @@
-package com.mrcinkowski.ShoppingApp.api.model;
+package com.mrcinkowski.ShoppingApp.api.dto;
 
-import com.mrcinkowski.ShoppingApp.model.Inventory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,5 +1,7 @@
 package com.mrcinkowski.ShoppingApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,8 @@ public class Inventory {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(optional = false, orphanRemoval = true)
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @JoinColumn(name = "product_id", nullable = false, unique = true)
     private Product product;
 
