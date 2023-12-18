@@ -17,7 +17,7 @@ import java.util.*;
 @Component
 public class RoleSetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    boolean alreadySetup = false;
+    boolean alreadySetup = true;
     private final RoleRepository roleRepository;
     private final PrivilegeRepository privilegeRepository;
     private final LocalUserRepository localUserRepository;
@@ -52,8 +52,8 @@ public class RoleSetupDataLoader implements ApplicationListener<ContextRefreshed
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilege));
 
-        Optional<Role> adminRole = roleRepository.findByName("ROLE_ADMIN");
 
+        Optional<Role> adminRole = roleRepository.findByName("ROLE_ADMIN");
         LocalUser localUser = new LocalUser();
         localUser.setUsername("admin");
         localUser.setPassword(encryptionService.encryptPassword("password"));

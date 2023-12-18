@@ -6,6 +6,7 @@ import com.mrcinkowski.ShoppingApp.api.dto.RegistrationBody;
 import com.mrcinkowski.ShoppingApp.exception.UserAlreadyExistsException;
 import com.mrcinkowski.ShoppingApp.model.LocalUser;
 import com.mrcinkowski.ShoppingApp.service.UserService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

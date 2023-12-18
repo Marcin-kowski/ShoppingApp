@@ -1,6 +1,7 @@
 package com.mrcinkowski.ShoppingApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,10 +35,10 @@ public class LocalUser {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Address> addresses = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "local_user_roles",
             joinColumns = @JoinColumn(name = "local_user_id", referencedColumnName = "id"),

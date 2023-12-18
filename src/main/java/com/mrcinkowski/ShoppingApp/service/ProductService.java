@@ -7,8 +7,6 @@ import com.mrcinkowski.ShoppingApp.model.Inventory;
 import com.mrcinkowski.ShoppingApp.model.Product;
 import com.mrcinkowski.ShoppingApp.model.repository.InventoryRepository;
 import com.mrcinkowski.ShoppingApp.model.repository.ProductRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
