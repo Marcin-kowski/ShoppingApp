@@ -1,8 +1,8 @@
 package com.mrcinkowski.ShoppingApp.api.controller.order;
 
-import com.mrcinkowski.ShoppingApp.model.LocalUser;
-import com.mrcinkowski.ShoppingApp.model.ShopOrder;
-import com.mrcinkowski.ShoppingApp.service.OrderService;
+import com.mrcinkowski.ShoppingApp.repository.entities.LocalUserEntity;
+import com.mrcinkowski.ShoppingApp.repository.entities.ShopOrderEntity;
+import com.mrcinkowski.ShoppingApp.service.implementations.OrderServiceImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +14,14 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderServiceImpl orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderServiceImpl orderService) {
         this.orderService = orderService;
     }
 
     @GetMapping
-    public List<ShopOrder> getOrders(@AuthenticationPrincipal LocalUser user) {
+    public List<ShopOrderEntity> getOrders(@AuthenticationPrincipal LocalUserEntity user) {
         return orderService.getOrders(user);
     }
 }

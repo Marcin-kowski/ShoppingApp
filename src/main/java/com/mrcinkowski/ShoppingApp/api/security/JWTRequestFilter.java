@@ -1,8 +1,8 @@
 package com.mrcinkowski.ShoppingApp.api.security;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.mrcinkowski.ShoppingApp.model.LocalUser;
-import com.mrcinkowski.ShoppingApp.model.repository.LocalUserRepository;
+import com.mrcinkowski.ShoppingApp.repository.LocalUserRepository;
+import com.mrcinkowski.ShoppingApp.repository.entities.LocalUserEntity;
 import com.mrcinkowski.ShoppingApp.service.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    private JWTService jwtService;
+    private final JWTService jwtService;
     private final LocalUserRepository localUserRepository;
 
     public JWTRequestFilter(JWTService jwtService,
@@ -37,9 +37,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             String token = tokenHeader.substring(7);
             try {
                 String username = jwtService.getUsername(token);
-                Optional<LocalUser> opUser = localUserRepository.findByUsernameIgnoreCase(username);
+                Optional<LocalUserEntity> opUser = localUserRepository.findByUsernameIgnoreCase(username);
                 if (opUser.isPresent()) {
-                    LocalUser user = opUser.get();
+                    LocalUserEntity user = opUser.get();
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);

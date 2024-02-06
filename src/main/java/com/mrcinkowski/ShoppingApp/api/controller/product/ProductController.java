@@ -3,8 +3,7 @@ package com.mrcinkowski.ShoppingApp.api.controller.product;
 import com.mrcinkowski.ShoppingApp.api.dto.ProductBody;
 import com.mrcinkowski.ShoppingApp.exception.ProductAlreadyExistsException;
 import com.mrcinkowski.ShoppingApp.exception.ProductNotFoundException;
-import com.mrcinkowski.ShoppingApp.model.Product;
-import com.mrcinkowski.ShoppingApp.model.repository.ProductRepository;
+import com.mrcinkowski.ShoppingApp.repository.entities.ProductEntity;
 import com.mrcinkowski.ShoppingApp.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -27,12 +26,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductEntity>> getAllProducts() {
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProduct(@PathVariable long id) {
+    public ResponseEntity<Optional<ProductEntity>> getProduct(@PathVariable long id) {
         try {
             return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
         } catch (ProductNotFoundException ex) {

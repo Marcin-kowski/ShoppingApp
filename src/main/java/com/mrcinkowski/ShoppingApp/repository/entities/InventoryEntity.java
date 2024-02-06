@@ -1,7 +1,6 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "inventory")
-public class Inventory {
+public class InventoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -19,7 +18,7 @@ public class Inventory {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @JoinColumn(name = "product_id", nullable = false, unique = true)
-    private Product product;
+    private ProductEntity productEntity;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;

@@ -1,6 +1,5 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "privilege")
-public class Privilege {
+public class PrivilegeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,7 +20,7 @@ public class Privilege {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
-    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(mappedBy = "privilegeEntities")
+    private List<RoleEntity> roleEntities = new ArrayList<>();
 
 }

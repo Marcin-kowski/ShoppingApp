@@ -2,7 +2,7 @@ package com.mrcinkowski.ShoppingApp.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.mrcinkowski.ShoppingApp.model.LocalUser;
+import com.mrcinkowski.ShoppingApp.repository.entities.LocalUserEntity;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class JWTService {
         algorithm = Algorithm.HMAC256(algorithmKey);
     }
 
-    public String generateJWT(LocalUser user) {
+    public String generateJWT(LocalUserEntity user) {
         return JWT.create()
                 .withClaim(USERNAME_KEY, user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000 + expiryInSeconds)))

@@ -1,7 +1,5 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,7 +26,7 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE, optional = false, orphanRemoval = true)
-    private Inventory inventory;
+    @OneToOne(mappedBy = "productEntity", cascade = CascadeType.REMOVE, optional = false, orphanRemoval = true)
+    private InventoryEntity inventoryEntity;
 
 }
