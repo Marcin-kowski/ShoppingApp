@@ -1,7 +1,5 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "role")
-public class Role {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,13 +20,13 @@ public class Role {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<LocalUser> localUsers = new ArrayList<>();
+    @ManyToMany(mappedBy = "roleEntities")
+    private List<LocalUserEntity> localUserEntities = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "role_privileges",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "privileges_id", referencedColumnName = "id"))
-    private List<Privilege> privileges = new ArrayList<>();
+    private List<PrivilegeEntity> privilegeEntities = new ArrayList<>();
 
 }

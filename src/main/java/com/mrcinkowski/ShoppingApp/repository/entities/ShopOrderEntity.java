@@ -1,4 +1,4 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "shop_order")
-public class ShopOrder {
+public class ShopOrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -19,13 +19,13 @@ public class ShopOrder {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private LocalUser user;
+    private LocalUserEntity user;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "address_id", nullable = false)
-    private Address address;
+    private AddressEntity addressEntity;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<ShopOrderQuantities> quantities = new ArrayList<>();
+    private List<ShopOrderQuantitiesEntity> quantities = new ArrayList<>();
 
 }

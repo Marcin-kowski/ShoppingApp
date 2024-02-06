@@ -1,18 +1,20 @@
 package com.mrcinkowski.ShoppingApp.service;
 
-import com.mrcinkowski.ShoppingApp.model.LocalUser;
-import com.mrcinkowski.ShoppingApp.model.Privilege;
-import com.mrcinkowski.ShoppingApp.model.Role;
-import com.mrcinkowski.ShoppingApp.model.repository.LocalUserRepository;
-import com.mrcinkowski.ShoppingApp.model.repository.PrivilegeRepository;
-import com.mrcinkowski.ShoppingApp.model.repository.RoleRepository;
+import com.mrcinkowski.ShoppingApp.repository.LocalUserRepository;
+import com.mrcinkowski.ShoppingApp.repository.PrivilegeRepository;
+import com.mrcinkowski.ShoppingApp.repository.RoleRepository;
+import com.mrcinkowski.ShoppingApp.repository.entities.LocalUserEntity;
+import com.mrcinkowski.ShoppingApp.repository.entities.PrivilegeEntity;
+import com.mrcinkowski.ShoppingApp.repository.entities.RoleEntity;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RoleSetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -39,57 +41,57 @@ public class RoleSetupDataLoader implements ApplicationListener<ContextRefreshed
 
         if (alreadySetup)
             return;
-        Privilege readPrivilege
+        PrivilegeEntity readPrivilegeEntity
                 = createPrivilegeIfNotFound("READ_PRIVILEGE");
-        Privilege writePrivilege
+        PrivilegeEntity writePrivilegeEntity
                 = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
-        Privilege deletePrivilege
+        PrivilegeEntity deletePrivilegeEntity
                 = createPrivilegeIfNotFound("DELETE_PRIVILEGE");
-        Privilege updatePrivilege
+        PrivilegeEntity updatePrivilegeEntity
                 = createPrivilegeIfNotFound("UPDATE_PRIVILEGE");
 
-        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege, updatePrivilege, deletePrivilege);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilege));
+        List<PrivilegeEntity> adminPrivilegeEntities = Arrays.asList(readPrivilegeEntity, writePrivilegeEntity, updatePrivilegeEntity, deletePrivilegeEntity);
+        createRoleIfNotFound("ROLE_ADMIN", adminPrivilegeEntities);
+        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilegeEntity));
 
 
-        Optional<Role> adminRole = roleRepository.findByName("ROLE_ADMIN");
-        LocalUser localUser = new LocalUser();
-        localUser.setUsername("admin");
-        localUser.setPassword(encryptionService.encryptPassword("password"));
-        localUser.setEmail("admin@test.com");
-        localUser.setFirstName("John");
-        localUser.setLastName("Doe");
-        localUser.setRoles(List.of(adminRole.orElseThrow()));
-        localUserRepository.save(localUser);
+        Optional<RoleEntity> adminRole = roleRepository.findByName("ROLE_ADMIN");
+        LocalUserEntity localUserEntity = new LocalUserEntity();
+        localUserEntity.setUsername("admin");
+        localUserEntity.setPassword(encryptionService.encryptPassword("password"));
+        localUserEntity.setEmail("admin@test.com");
+        localUserEntity.setFirstName("John");
+        localUserEntity.setLastName("Doe");
+        localUserEntity.setRoleEntities(List.of(adminRole.orElseThrow()));
+        localUserRepository.save(localUserEntity);
 
         alreadySetup = true;
     }
 
     @Transactional
-    Privilege createPrivilegeIfNotFound(String name) {
+    PrivilegeEntity createPrivilegeIfNotFound(String name) {
 
-        Optional<Privilege> privilegeOptional = privilegeRepository.findByName(name);
+        Optional<PrivilegeEntity> privilegeOptional = privilegeRepository.findByName(name);
         if (privilegeOptional.isEmpty()) {
-            Privilege privilege = new Privilege();
-            privilege.setName(name);
-            privilegeRepository.save(privilege);
-            return privilege;
+            PrivilegeEntity privilegeEntity = new PrivilegeEntity();
+            privilegeEntity.setName(name);
+            privilegeRepository.save(privilegeEntity);
+            return privilegeEntity;
         }
 
         return privilegeOptional.get();
     }
 
     @Transactional
-    Role createRoleIfNotFound(String name, List<Privilege> privileges) {
+    RoleEntity createRoleIfNotFound(String name, List<PrivilegeEntity> privilegeEntities) {
 
-        Optional<Role> roleOptional = roleRepository.findByName(name);
+        Optional<RoleEntity> roleOptional = roleRepository.findByName(name);
         if (roleOptional.isEmpty()) {
-            Role role = new Role();
-            role.setName(name);
-            role.setPrivileges(privileges);
-            roleRepository.save(role);
-            return role;
+            RoleEntity roleEntity = new RoleEntity();
+            roleEntity.setName(name);
+            roleEntity.setPrivilegeEntities(privilegeEntities);
+            roleRepository.save(roleEntity);
+            return roleEntity;
         }
         return roleOptional.get();
     }

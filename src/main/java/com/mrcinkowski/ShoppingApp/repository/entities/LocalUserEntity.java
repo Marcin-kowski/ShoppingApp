@@ -1,7 +1,6 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "local_user")
-public class LocalUser {
+public class LocalUserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -36,13 +35,13 @@ public class LocalUser {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Address> addresses = new ArrayList<>();
+    private List<AddressEntity> addressEntities = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "local_user_roles",
             joinColumns = @JoinColumn(name = "local_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();
+    private List<RoleEntity> roleEntities = new ArrayList<>();
 
 }

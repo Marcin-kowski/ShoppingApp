@@ -1,4 +1,4 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "address")
-public class Address {
+public class AddressEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -33,6 +34,6 @@ public class Address {
     @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private LocalUser user;
+    private LocalUserEntity user;
 
 }

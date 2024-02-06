@@ -4,9 +4,8 @@ import com.mrcinkowski.ShoppingApp.api.dto.LoginBody;
 import com.mrcinkowski.ShoppingApp.api.dto.LoginResponse;
 import com.mrcinkowski.ShoppingApp.api.dto.RegistrationBody;
 import com.mrcinkowski.ShoppingApp.exception.UserAlreadyExistsException;
-import com.mrcinkowski.ShoppingApp.model.LocalUser;
+import com.mrcinkowski.ShoppingApp.repository.entities.LocalUserEntity;
 import com.mrcinkowski.ShoppingApp.service.UserService;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +51,7 @@ public class AuthenticationController {
         }
 
     @GetMapping("/me")
-    public LocalUser getLoggedInUserProfile(@AuthenticationPrincipal LocalUser user) {
+    public LocalUserEntity getLoggedInUserProfile(@AuthenticationPrincipal LocalUserEntity user) {
         return user;
     }
 }

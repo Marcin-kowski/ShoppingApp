@@ -1,4 +1,4 @@
-package com.mrcinkowski.ShoppingApp.model;
+package com.mrcinkowski.ShoppingApp.repository.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "shop_order_quantities")
-public class ShopOrderQuantities {
+public class ShopOrderQuantitiesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -17,7 +17,7 @@ public class ShopOrderQuantities {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    private ProductEntity productEntity;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -25,6 +25,6 @@ public class ShopOrderQuantities {
     @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private ShopOrder order;
+    private ShopOrderEntity order;
 
 }
